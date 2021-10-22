@@ -5,7 +5,7 @@ the rules and initial conditions to run.
 
 # importing all the essential libraries
 
-import pylab
+import matplotlib.pylab as pylab
 import os
 import boolean2
 import pandas as pd
@@ -13,14 +13,13 @@ from boolean2 import util
 
 # Creating a path to save plots, results and the parameters
 
-main_folder = "C:\Users\harsi\Desktop\BRAFi_SOCE figures"
-path_to_save = main_folder + "\\Network_3"
-isExist = os.path.exists(path_to_save)
+main_folder = os.path.join(os.getcwd(), "BRAFi_SOCE_figures")
+if not os.path.exists(main_folder):
+    os.mkdir(main_folder)
 
-# if the path does not exist directory will be created
-if not isExist:
+path_to_save = os.path.join(main_folder, "Network_3")
+if not os.path.exists(path_to_save):
     os.mkdir(path_to_save)
-
 
 # function to simulate model
 
@@ -49,10 +48,10 @@ created and saved in the folder path defined above.
 '''
 
 def updating_initial_condition(rules, nodes, df, path_to_save, count):
-    with open(path_to_save + "\model_rules_" + str(count) + ".txt", 'w') as f:
+    with open("model_rules_" + str(count) + ".txt", 'w') as f:
         f.write(rules)
 
-    with open(path_to_save + "\model_rules_" + str(count) + ".txt", 'r') as f:
+    with open("model_rules_" + str(count) + ".txt", 'r') as f:
         lines = f.readlines()
 
     for node, i in zip(nodes, range(0, 23)):
@@ -63,7 +62,7 @@ def updating_initial_condition(rules, nodes, df, path_to_save, count):
         lines[i] = n_line
         # # print(lines[i])
 
-    with open(path_to_save + "\model_rules_" + str(count) + ".txt", 'w') as f:
+    with open("model_rules_" + str(count) + ".txt", 'w') as f:
         f.writelines(lines)
 
 '''
@@ -81,7 +80,7 @@ def plots_for_simulation(average_states, count, path_to_save):
     p5 = pylab.plot(average_states['UK_node'], 'sy-', label='UK_node')
     pylab.legend()
     pylab.ylim((-0.1, 1.1))
-    pylab.savefig(path_to_save + '/short_fig_' + str(count) + '.png')
+    pylab.savefig(os.path.join(path_to_save, 'short_fig_' + str(count) + '.png'))
     pylab.close()
 
 
@@ -97,7 +96,7 @@ count = range(5)
 treatment = 'short'
 combined_states = {}
 for i in count:
-    with open(path_to_save + "\model_rules_" + str(i) + ".txt", 'r') as f:
+    with open("model_rules_" + str(i) + ".txt", 'r') as f:
         model_rules = f.read()
 
     if (i < 1):
