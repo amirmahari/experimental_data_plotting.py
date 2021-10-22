@@ -1,3 +1,8 @@
+'''
+This pipeline requires model_rules_0.txt file with
+the rules and initial conditions to run.
+'''
+
 # importing all the essential libraries
 
 import pylab
