@@ -126,10 +126,10 @@ for i in count:
             value.extend(average_states[key])
 
     elif(i == 2):
-        # ERK_state = combined_states['ERK']
-        # ERK_state_mean = (sum(ERK_state[-20:])/len(ERK_state[-20:]))
-        # if ERK_state_mean == 0:
-        #     on = ['UK_node']
+        ERK_state = combined_states['ERK']
+        ERK_state_mean = (sum(ERK_state[-20:])/len(ERK_state[-20:]))
+        if ERK_state_mean == 0:
+            on = ['UK_node']
         off = ['Ca_ext']
         new_txt = boolean2.modify_states(model_rules, turnon=on, turnoff=off)
         average_states, df, nodes = async_model_sim(new_txt, iterations=10)
